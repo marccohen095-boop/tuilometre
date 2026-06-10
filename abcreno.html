@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Châssis PVC et VMC en Wallonie & Flandre | ABC Reno</title>
+<meta name="description" content="ABC Reno remplace vos châssis et installe votre VMC hygroréglable en Wallonie et en Flandre. Conseil, mesure, pose soignée, primes — devis gratuit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --encre:#07222e;
+  --encre-2:#27444f;
+  --aqua:#0c8aa0;
+  --aqua-vif:#16b5cc;
+  --aqua-pale:#d9f1f5;
+  --glace:#f2f8fa;
+  --blanc:#ffffff;
+  --verre:rgba(255,255,255,.55);
+  --verre-bord:rgba(255,255,255,.75);
+  --ombre:0 24px 60px -24px rgba(7,48,62,.35);
+  --r:26px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Outfit',sans-serif;
+  color:var(--encre);
+  background:var(--glace);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+h1,h2,h3,.t{font-family:'Sora',sans-serif;letter-spacing:-.02em}
+
+/* ================== FOND AQUATIQUE ================== */
+.eau{
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 700px at 85% -10%, #c8ecf2 0%, transparent 60%),
+    radial-gradient(900px 600px at -10% 30%, #dcf2ee 0%, transparent 55%),
+    radial-gradient(1000px 800px at 60% 110%, #cfe9f4 0%, transparent 60%),
+    linear-gradient(180deg,#f6fbfc 0%, #eaf4f7 100%);
+}
+.blob{
+  position:fixed;border-radius:50%;filter:blur(70px);opacity:.5;z-index:-1;
+  animation:derive 26s ease-in-out infinite alternate;
+}
+.blob.b1{width:520px;height:520px;left:-140px;top:8%;background:radial-gradient(circle at 35% 35%, #9fe3ee, #4cc4d8 70%)}
+.blob.b2{width:420px;height:420px;right:-120px;top:38%;background:radial-gradient(circle at 40% 30%, #bdeee6, #6fd2c4 70%);animation-duration:32s;animation-delay:-8s}
+.blob.b3{width:460px;height:460px;left:30%;bottom:-200px;background:radial-gradient(circle at 35% 35%, #aadcf2, #5fb9dc 70%);animation-duration:38s;animation-delay:-16s}
+@keyframes derive{
+  0%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(60px,-40px) scale(1.12)}
+  100%{transform:translate(-40px,50px) scale(.94)}
+}
+/* gouttes qui tombent */
+.goutte{
+  position:fixed;top:-40px;z-index:-1;width:14px;height:20px;opacity:.5;
+  background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.95), rgba(120,205,222,.65) 55%, rgba(60,160,185,.5));
+  border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  animation:chute linear infinite;
+}
+@keyframes chute{
+  0%{transform:translateY(-5vh) scale(.7);opacity:0}
+  12%{opacity:.55}
+  100%{transform:translateY(108vh) scale(1.05);opacity:0}
+}
+/* ondulation au clic */
+.ripple{
+  position:fixed;border:2px solid rgba(22,160,185,.55);border-radius:50%;
+  pointer-events:none;z-index:60;animation:onde 1s ease-out forwards;
+}
+@keyframes onde{
+  0%{transform:translate(-50%,-50%) scale(.1);opacity:.8}
+  100%{transform:translate(-50%,-50%) scale(3.2);opacity:0}
+}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* ================== NAV ================== */
+nav{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;
+  width:min(1180px,calc(100% - 28px));
+  display:flex;align-items:center;gap:18px;
+  background:var(--verre);
+  border:1px solid var(--verre-bord);
+  backdrop-filter:blur(18px) saturate(1.4);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);
+  border-radius:60px;padding:10px 14px 10px 18px;
+  box-shadow:0 14px 44px -18px rgba(7,48,62,.3), inset 0 1px 0 rgba(255,255,255,.9);
+}
+nav .logo{display:flex;align-items:center;gap:10px;font-family:'Sora';font-weight:800;font-size:1.05rem;color:var(--encre);text-decoration:none}
+nav .logo img{width:38px;height:38px;border-radius:50%;object-fit:cover;box-shadow:0 4px 12px rgba(7,48,62,.25)}
+nav .liens{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav .liens a{
+  color:var(--encre-2);text-decoration:none;font-weight:500;font-size:.86rem;
+  padding:8px 13px;border-radius:40px;transition:.25s;
+}
+nav .liens a:hover{background:rgba(255,255,255,.85);color:var(--aqua);box-shadow:0 4px 14px -6px rgba(7,48,62,.25)}
+.cta{
+  background:linear-gradient(135deg,var(--aqua) 0%, var(--aqua-vif) 100%);
+  color:#fff!important;font-weight:600;padding:11px 22px!important;border-radius:40px;
+  box-shadow:0 10px 24px -8px rgba(12,138,160,.55), inset 0 1px 0 rgba(255,255,255,.45);
+  transition:.25s;text-decoration:none;display:inline-block;
+}
+.cta:hover{transform:translateY(-2px);box-shadow:0 16px 30px -8px rgba(12,138,160,.6)}
+@media(max-width:980px){nav .liens a:not(.cta){display:none}}
+
+/* ================== HERO ================== */
+header{padding:170px 0 70px;position:relative}
+.sur-titre{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.78rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--aqua);
+  background:rgba(255,255,255,.6);border:1px solid var(--verre-bord);border-radius:40px;
+  padding:8px 18px;backdrop-filter:blur(8px);margin-bottom:26px;
+}
+.sur-titre::before{content:"";width:26px;height:2px;background:var(--aqua)}
+h1{font-size:clamp(2.4rem,5.4vw,4.3rem);font-weight:800;line-height:1.06;max-width:13ch}
+h1 .grad{
+  background:linear-gradient(110deg,var(--aqua) 10%, #2dd3e3 45%, #1b9eb4 80%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+header p.intro{margin:26px 0 34px;font-size:1.14rem;color:var(--encre-2);max-width:52ch;font-weight:300}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+@media(max-width:920px){.hero-grid{grid-template-columns:1fr}}
+.boutons{display:flex;gap:14px;flex-wrap:wrap}
+.btn-ghost{
+  color:var(--encre);font-weight:600;padding:13px 26px;border-radius:40px;text-decoration:none;
+  background:rgba(255,255,255,.6);border:1px solid var(--verre-bord);backdrop-filter:blur(8px);
+  transition:.25s;
+}
+.btn-ghost:hover{background:#fff;transform:translateY(-2px)}
+.stats{display:flex;gap:12px;margin-top:42px;flex-wrap:wrap}
+.stat{
+  background:var(--verre);border:1px solid var(--verre-bord);border-radius:20px;
+  backdrop-filter:blur(14px);padding:14px 22px;box-shadow:var(--ombre);
+  transition:transform .3s;
+}
+.stat:hover{transform:translateY(-4px)}
+.stat b{font-family:'Sora';font-size:1.5rem;display:block;color:var(--aqua)}
+.stat span{font-size:.78rem;color:var(--encre-2)}
+
+/* carte miroir hero */
+.miroir{position:relative;perspective:1200px}
+.carte-photo{
+  border-radius:var(--r);overflow:hidden;position:relative;
+  border:1px solid var(--verre-bord);
+  box-shadow:0 40px 80px -30px rgba(7,48,62,.45);
+  transform-style:preserve-3d;transition:transform .2s ease-out;
+}
+.carte-photo img{width:100%;height:430px;object-fit:cover;display:block}
+.carte-photo::after{ /* reflet vitre qui glisse */
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,.38) 46%, rgba(255,255,255,.12) 54%, transparent 70%);
+  transform:translateX(-120%);animation:reflet 6.5s ease-in-out infinite;
+}
+@keyframes reflet{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+.reflet-sol{
+  margin-top:4px;height:90px;border-radius:var(--r);overflow:hidden;opacity:.8;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 85%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 85%);
+}
+.reflet-sol img{width:100%;height:430px;object-fit:cover;transform:scaleY(-1);filter:blur(2px) saturate(.9)}
+.badge-flottant{
+  position:absolute;z-index:3;background:var(--verre);border:1px solid var(--verre-bord);
+  backdrop-filter:blur(14px);border-radius:18px;padding:12px 18px;box-shadow:var(--ombre);
+  font-size:.85rem;font-weight:600;animation:flotter 5s ease-in-out infinite;
+}
+.badge-flottant small{display:block;font-weight:400;color:var(--encre-2);font-size:.74rem}
+.bf1{top:22px;left:-26px}
+.bf2{bottom:120px;right:-20px;animation-delay:-2.5s}
+@keyframes flotter{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* ================== SECTIONS ================== */
+section{padding:84px 0;position:relative}
+.titre-bloc{max-width:680px;margin-bottom:48px}
+.titre-bloc h2{font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:800;line-height:1.15}
+.titre-bloc p{color:var(--encre-2);margin-top:14px;font-weight:300;font-size:1.05rem}
+
+/* SLIDER */
+.slider{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:0 40px 90px -32px rgba(7,48,62,.5);border:1px solid var(--verre-bord)}
+.rail{display:flex;transition:transform .7s cubic-bezier(.65,.05,.25,1)}
+.slide{min-width:100%;position:relative}
+.slide img{width:100%;height:520px;object-fit:cover;display:block}
+@media(max-width:700px){.slide img{height:380px}}
+.slide .legende{
+  position:absolute;left:22px;bottom:22px;right:22px;
+  background:rgba(10,40,52,.45);border:1px solid rgba(255,255,255,.3);
+  backdrop-filter:blur(16px);border-radius:18px;padding:16px 22px;color:#fff;
+}
+.slide .legende b{font-family:'Sora';font-size:1.05rem;display:block}
+.slide .legende span{font-size:.85rem;opacity:.85}
+.fleche{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+  width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.5);
+  background:rgba(255,255,255,.32);backdrop-filter:blur(10px);color:#fff;
+  font-size:1.4rem;cursor:pointer;transition:.25s;display:flex;align-items:center;justify-content:center;
+}
+.fleche:hover{background:rgba(255,255,255,.6);color:var(--encre)}
+.fleche.g{left:18px}.fleche.d{right:18px}
+.points{position:absolute;bottom:-34px;left:50%;transform:translateX(-50%);display:flex;gap:9px}
+.point{width:9px;height:9px;border-radius:50%;background:rgba(7,48,62,.25);cursor:pointer;transition:.3s;border:none}
+.point.actif{width:30px;border-radius:10px;background:var(--aqua)}
+
+/* SERVICES */
+.cartes{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.carte{
+  background:var(--verre);border:1px solid var(--verre-bord);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.3);padding:36px 32px;box-shadow:var(--ombre);
+  position:relative;overflow:hidden;transition:transform .35s, box-shadow .35s;
+}
+.carte:hover{transform:translateY(-8px);box-shadow:0 40px 80px -28px rgba(7,48,62,.45)}
+.carte::before{ /* goutte décorative */
+  content:"";position:absolute;top:-46px;right:-46px;width:130px;height:130px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.9), rgba(120,205,222,.35) 60%, transparent 75%);
+}
+.carte .ico{
+  width:62px;height:62px;border-radius:20px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--aqua),var(--aqua-vif));color:#fff;font-size:1.6rem;
+  box-shadow:0 14px 28px -10px rgba(12,138,160,.6);margin-bottom:22px;
+}
+.carte h3{font-size:1.3rem;margin-bottom:12px}
+.carte p{color:var(--encre-2);font-size:.95rem;font-weight:300}
+.carte a{display:inline-block;margin-top:18px;color:var(--aqua);font-weight:600;text-decoration:none;font-size:.92rem}
+.carte a:hover{text-decoration:underline}
+
+/* PROCESS */
+.etapes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;counter-reset:etape}
+.et{
+  background:var(--verre);border:1px solid var(--verre-bord);border-radius:22px;
+  backdrop-filter:blur(14px);padding:30px 26px;box-shadow:var(--ombre);position:relative;
+  transition:transform .3s;
+}
+.et:hover{transform:translateY(-6px)}
+.et::before{
+  counter-increment:etape;content:counter(etape);
+  font-family:'Sora';font-weight:800;font-size:1.1rem;color:#fff;
+  width:46px;height:52px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,var(--aqua),var(--aqua-vif));
+  border-radius:50% 50% 50% 50%/58% 58% 42% 42%; /* forme goutte */
+  box-shadow:0 12px 24px -8px rgba(12,138,160,.55);margin-bottom:18px;
+}
+.et h3{font-size:1.06rem;margin-bottom:8px}
+.et p{font-size:.88rem;color:var(--encre-2);font-weight:300}
+
+/* TEMOIGNAGE */
+.temo{
+  background:linear-gradient(135deg, rgba(12,138,160,.92), rgba(22,181,204,.88)), url('https://abcreno.be/assets/chassis-fini-abc-reno.jpg') center/cover;
+  border-radius:var(--r);padding:64px 48px;color:#fff;text-align:center;
+  box-shadow:0 40px 90px -30px rgba(12,138,160,.6);position:relative;overflow:hidden;
+}
+.temo::before{content:"“";font-family:'Sora';font-size:7rem;opacity:.25;position:absolute;top:-6px;left:30px}
+.temo blockquote{font-family:'Sora';font-size:clamp(1.15rem,2.4vw,1.65rem);font-weight:600;max-width:34ch;margin:0 auto 18px;line-height:1.4}
+.temo .note{font-size:1rem;opacity:.92}
+.temo .note b{font-size:1.3rem}
+
+/* ZONES (bandeau défilant) */
+.bandeau{overflow:hidden;padding:26px 0;border-top:1px solid rgba(7,48,62,.08);border-bottom:1px solid rgba(7,48,62,.08);background:rgba(255,255,255,.4);backdrop-filter:blur(8px)}
+.defile{display:flex;gap:46px;white-space:nowrap;animation:defiler 30s linear infinite;width:max-content}
+.defile span{font-family:'Sora';font-weight:700;font-size:1.05rem;color:var(--encre-2);display:flex;align-items:center;gap:46px}
+.defile span::after{content:"💧";font-size:.8rem}
+@keyframes defiler{to{transform:translateX(-50%)}}
+
+/* CTA FINAL */
+.final{
+  text-align:center;background:var(--verre);border:1px solid var(--verre-bord);
+  border-radius:var(--r);backdrop-filter:blur(18px);padding:70px 32px;box-shadow:var(--ombre);
+  position:relative;overflow:hidden;
+}
+.final h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:800;max-width:24ch;margin:0 auto 16px}
+.final p{color:var(--encre-2);margin-bottom:30px;font-weight:300}
+
+/* FOOTER */
+footer{background:var(--encre);color:#bcd6dd;padding:64px 0 36px;margin-top:90px}
+.foot{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:36px}
+@media(max-width:820px){.foot{grid-template-columns:1fr 1fr}}
+footer h4{font-family:'Sora';color:#fff;font-size:.95rem;margin-bottom:16px}
+footer a{color:#bcd6dd;text-decoration:none;display:block;margin-bottom:10px;font-size:.9rem;transition:.2s}
+footer a:hover{color:var(--aqua-vif)}
+footer p{font-size:.9rem;margin-bottom:10px}
+.foot-logo{display:flex;align-items:center;gap:12px;font-family:'Sora';font-weight:800;color:#fff;font-size:1.2rem;margin-bottom:16px}
+.foot-logo img{width:44px;height:44px;border-radius:50%}
+.legal{border-top:1px solid rgba(255,255,255,.12);margin-top:46px;padding-top:24px;font-size:.8rem;text-align:center;opacity:.7}
+
+/* apparitions au scroll */
+.rev{opacity:0;transform:translateY(36px);transition:opacity .9s ease, transform .9s cubic-bezier(.2,.7,.3,1)}
+.rev.vu{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="eau"></div>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+<nav>
+  <a class="logo" href="index.html">
+    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/w1n41he6sDceZ6Zy/img_0136-2-a8msyY50uApfVEqb.PNG" alt="ABC Reno">
+    ABC&nbsp;Reno
+  </a>
+  <div class="liens">
+    <a href="realisations.html">Réalisations</a>
+    <a href="chassis-wallonie.html">Châssis</a>
+    <a href="vmc-wallonie.html">VMC</a>
+    <a href="primes.html">Primes</a>
+    <a href="zones.html">Zones</a>
+    <a href="temoignages.html">Témoignages</a>
+    <a href="contact.html">Contact</a>
+    <a href="nl.html">NL</a>
+    <a class="cta" href="contact.html">Devis gratuit</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="sur-titre rev">Wallonie &amp; Vlaanderen</div>
+      <h1 class="rev">Des châssis précis.<br><span class="grad">Un air plus sain.</span></h1>
+      <p class="intro rev">ABC Reno remplace vos châssis et installe votre VMC hygroréglable avec une approche claire : conseil, mesure, pose soignée et devis gratuit avant travaux.</p>
+      <div class="boutons rev">
+        <a class="cta" href="contact.html">Demander un devis gratuit</a>
+        <a class="btn-ghost" href="tel:+3265701141">📞 +32 65 70 11 41</a>
+      </div>
+      <div class="stats rev">
+        <div class="stat"><b>4,7/5</b><span>avis clients</span></div>
+        <div class="stat"><b>15 ans</b><span>d'expérience terrain</span></div>
+        <div class="stat"><b>Uw ≤ 1,50</b><span>cible technique primes</span></div>
+      </div>
+    </div>
+    <div class="miroir rev" id="miroir">
+      <div class="badge-flottant bf1">💧 VMC hygroréglable<small>un air renouvelé en continu</small></div>
+      <div class="badge-flottant bf2">✓ Pose certifiée<small>chantier propre, photos de suivi</small></div>
+      <div class="carte-photo" id="cartePhoto">
+        <img src="https://abcreno.be/assets/chassis-fini-abc-reno.jpg" alt="Châssis posés par ABC Reno">
+      </div>
+      <div class="reflet-sol"><img src="https://abcreno.be/assets/chassis-fini-abc-reno.jpg" alt=""></div>
+    </div>
+  </div>
+</header>
+
+<!-- SLIDER RÉALISATIONS -->
+<section id="realisations">
+  <div class="wrap">
+    <div class="titre-bloc rev">
+      <h2>Nos réalisations, <span style="color:var(--aqua)">en vrai.</span></h2>
+      <p>Châssis, portes et ventilation posés par nos équipes, de Mons à Leuven.</p>
+    </div>
+    <div class="slider rev" id="slider">
+      <div class="rail" id="rail">
+        <div class="slide"><img src="https://abcreno.be/assets/chassis-fini-abc-reno.jpg" alt="Châssis finis"><div class="legende"><b>Résultat fini</b><span>Châssis noir, finitions propres, lumière naturelle et intérieur net.</span></div></div>
+        <div class="slide"><img src="https://abcreno.be/assets/chantier-pose-chassis-abc-reno.jpg" alt="Pose en cours"><div class="legende"><b>Pose en cours</b><span>Un technicien ABC Reno ajuste le châssis avant finition.</span></div></div>
+        <div class="slide"><img src="https://abcreno.be/assets/porte-chantier-abc-reno.jpg" alt="Entrée complète"><div class="legende"><b>Entrée complète</b><span>Porte, vitrages latéraux et alignements traités comme un seul ensemble.</span></div></div>
+        <div class="slide"><img src="https://abcreno.be/assets/vmc-atlantic-installation-abc-reno.jpg" alt="Installation VMC"><div class="legende"><b>VMC hygroréglable</b><span>Extraction adaptée à l'humidité, installée dans les règles de l'art.</span></div></div>
+        <div class="slide"><img src="https://abcreno.be/assets/equipe-abc-reno.jpg" alt="Équipe ABC Reno"><div class="legende"><b>Nos équipes</b><span>Une équipe identifiable, équipée et présente sur le terrain.</span></div></div>
+      </div>
+      <button class="fleche g" onclick="bouge(-1)" aria-label="Précédent">‹</button>
+      <button class="fleche d" onclick="bouge(1)" aria-label="Suivant">›</button>
+      <div class="points" id="points"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="padding-top:110px">
+  <div class="wrap">
+    <div class="titre-bloc rev">
+      <h2>Deux métiers, <span style="color:var(--aqua)">une seule exigence.</span></h2>
+      <p>Changer les châssis et ventiler, ce n'est pas juste esthétique : c'est moins de froid près des fenêtres, moins de bruit, moins de condensation.</p>
+    </div>
+    <div class="cartes">
+      <div class="carte rev">
+        <div class="ico">🪟</div>
+        <h3>Châssis PVC sur mesure</h3>
+        <p>Mesure précise, profilés performants (Uw ≤ 1,50), pose soignée et finitions nettes. Du remplacement d'une fenêtre au projet complet.</p>
+        <a href="chassis-wallonie.html">Découvrir les châssis →</a>
+      </div>
+      <div class="carte rev">
+        <div class="ico">💨</div>
+        <h3>VMC hygroréglable</h3>
+        <p>Quand une maison devient plus étanche, l'air doit continuer à circuler. La VMC adapte l'extraction selon l'humidité, sans ouvrir les fenêtres toute la journée.</p>
+        <a href="vmc-wallonie.html">Découvrir la VMC →</a>
+      </div>
+      <div class="carte rev">
+        <div class="ico">🏷️</div>
+        <h3>Primes &amp; accompagnement</h3>
+        <p>Annexes techniques, performances visées et orientation selon votre région — Wallonie, Flandre ou Bruxelles. On s'occupe de la paperasse.</p>
+        <a href="primes.html">Voir les primes →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section>
+  <div class="wrap">
+    <div class="titre-bloc rev">
+      <h2>Un déroulé <span style="color:var(--aqua)">limpide.</span></h2>
+      <p>De la première visite à la dernière annexe de prime, vous savez toujours où en est votre chantier.</p>
+    </div>
+    <div class="etapes">
+      <div class="et rev"><h3>Conseil &amp; mesure</h3><p>Visite technique : mesures, humidité et priorités PEB.</p></div>
+      <div class="et rev"><h3>Devis</h3><p>Options claires, performances visées, planning réaliste.</p></div>
+      <div class="et rev"><h3>Pose</h3><p>Équipe organisée, chantier propre, photos de suivi.</p></div>
+      <div class="et rev"><h3>Primes</h3><p>Annexes techniques et orientation selon votre région.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGE -->
+<section>
+  <div class="wrap">
+    <div class="temo rev">
+      <blockquote>Conseil clair, pose impeccable, et un air enfin sain dans toute la maison.</blockquote>
+      <div class="note">⭐⭐⭐⭐⭐ &nbsp;<b>4,7/5</b> — avis clients vérifiés &nbsp;·&nbsp; <a href="temoignages.html" style="color:#fff">lire les témoignages →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ZONES -->
+<div class="bandeau rev">
+  <div class="defile" id="defile">
+    <span>Mons</span><span>Charleroi</span><span>Liège</span><span>Namur</span><span>Bruxelles</span><span>Tournai</span><span>La Louvière</span><span>Brabant wallon</span><span>Kraainem</span><span>Leuven</span><span>Dinant</span><span>Hainaut</span><span>Luxembourg</span>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<section>
+  <div class="wrap">
+    <div class="final rev">
+      <h2>Vous avez des anciens châssis ou de l'humidité ?</h2>
+      <p>Envoyez votre demande maintenant. ABC Reno vous rappelle pour cadrer le projet, vérifier les primes possibles et planifier une visite technique.</p>
+      <div class="boutons" style="justify-content:center">
+        <a class="cta" href="contact.html">Demander un devis gratuit</a>
+        <a class="btn-ghost" href="tel:+3265701141">Être rappelé</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="foot-logo"><img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/w1n41he6sDceZ6Zy/img_0136-2-a8msyY50uApfVEqb.PNG" alt="">ABC Reno</div>
+        <p>Châssis &amp; VMC en Wallonie et Flandre. Conseil, mesure, pose soignée et suivi des primes.</p>
+        <p style="opacity:.7">TVA BE 1016.545.647</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Chaussée de Malines 455<br>1950 Kraainem</p>
+        <a href="tel:+3265701141">+32 65 70 11 41</a>
+        <a href="mailto:contact@abcreno.be">contact@abcreno.be</a>
+      </div>
+      <div>
+        <h4>Horaires</h4>
+        <p>Lundi – Vendredi<br>9h – 12h · 14h – 19h</p>
+      </div>
+      <div>
+        <h4>Informations</h4>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="politique-confidentialite.html">Confidentialité</a>
+        <a href="garanties-sav.html">Garanties &amp; SAV</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <div class="legal">© <span id="annee"></span> ABC Reno — Châssis PVC &amp; VMC · Wallonie &amp; Vlaanderen</div>
+  </div>
+</footer>
+
+<script>
+/* ===== gouttes d'eau aléatoires ===== */
+for(let i=0;i<14;i++){
+  const g=document.createElement('div');
+  g.className='goutte';
+  g.style.left=(Math.random()*100)+'vw';
+  g.style.animationDuration=(6+Math.random()*9)+'s';
+  g.style.animationDelay=(-Math.random()*12)+'s';
+  g.style.transform='scale('+(0.5+Math.random())+')';
+  document.body.appendChild(g);
+}
+
+/* ===== ondulation au clic ===== */
+addEventListener('pointerdown',e=>{
+  const r=document.createElement('div');
+  r.className='ripple';
+  r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
+  r.style.width=r.style.height='80px';
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(),1000);
+});
+
+/* ===== slider ===== */
+const rail=document.getElementById('rail');
+const n=rail.children.length;
+let idx=0,timer;
+const pts=document.getElementById('points');
+for(let i=0;i<n;i++){
+  const b=document.createElement('button');
+  b.className='point'+(i?'':' actif');
+  b.onclick=()=>va(i);
+  pts.appendChild(b);
+}
+function va(i){
+  idx=(i+n)%n;
+  rail.style.transform=`translateX(-${idx*100}%)`;
+  [...pts.children].forEach((p,j)=>p.classList.toggle('actif',j===idx));
+  relance();
+}
+function bouge(d){va(idx+d)}
+function relance(){clearInterval(timer);timer=setInterval(()=>va(idx+1),5000)}
+relance();
+/* glissement tactile */
+let x0=null;
+rail.addEventListener('pointerdown',e=>x0=e.clientX);
+addEventListener('pointerup',e=>{
+  if(x0===null)return;
+  const dx=e.clientX-x0;
+  if(Math.abs(dx)>50) bouge(dx<0?1:-1);
+  x0=null;
+});
+
+/* ===== inclinaison miroir hero ===== */
+const cp=document.getElementById('cartePhoto'), mi=document.getElementById('miroir');
+if(matchMedia('(pointer:fine)').matches && mi){
+  mi.addEventListener('mousemove',e=>{
+    const r=mi.getBoundingClientRect();
+    const rx=((e.clientY-r.top)/r.height-.5)*-7;
+    const ry=((e.clientX-r.left)/r.width-.5)*9;
+    cp.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+  });
+  mi.addEventListener('mouseleave',()=>cp.style.transform='rotateX(0) rotateY(0)');
+}
+
+/* ===== bandeau zones : duplication pour boucle ===== */
+const df=document.getElementById('defile');
+df.innerHTML+=df.innerHTML;
+
+/* ===== apparitions au scroll ===== */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('vu');io.unobserve(e.target);}
+}),{threshold:.12});
+document.querySelectorAll('.rev').forEach(el=>io.observe(el));
+
+document.getElementById('annee').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
