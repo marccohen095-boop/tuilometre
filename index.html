@@ -169,6 +169,17 @@
   .res-tuile.alerte{background:#ffd34d}
   .res-tuile.alerte span{color:#5a4500}
   .compteurs.off{opacity:.35;pointer-events:none}
+  .formes{display:flex;gap:8px;margin-bottom:12px}
+  .formes.off{opacity:.35;pointer-events:none}
+  .forme{
+    flex:1;background:#fff;border:3px solid var(--ardoise);border-radius:14px;
+    padding:10px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:.78rem;
+    box-shadow:3px 3px 0 rgba(46,48,56,.18);
+  }
+  .forme svg{display:block;margin:0 auto 5px;width:44px;height:30px}
+  .forme.sel{border-color:var(--terre);background:#fff7ef;box-shadow:3px 3px 0 var(--terre)}
+  .forme.sel svg path{fill:var(--terre)}
+  .compteur.cache{display:none}
 </style>
 </head>
 <body>
@@ -204,14 +215,33 @@
     </div>
   </details>
 
-  <div class="etape"><div class="num">2</div><h2>Compte</h2></div>
+  <div class="etape"><div class="num">2</div><h2>Forme du pan + compte</h2></div>
+  <div class="formes off" id="zoneFormes">
+    <div class="forme sel" id="forme-rect" onclick="setForme('rect')">
+      <svg viewBox="0 0 44 30"><path d="M2 2 H42 V28 H2 Z" fill="#2e3038"/></svg>Rectangle
+    </div>
+    <div class="forme" id="forme-tri" onclick="setForme('tri')">
+      <svg viewBox="0 0 44 30"><path d="M22 2 L42 28 H2 Z" fill="#2e3038"/></svg>Triangle<br><small>pignon / pointe</small>
+    </div>
+    <div class="forme" id="forme-trap" onclick="setForme('trap')">
+      <svg viewBox="0 0 44 30"><path d="M14 2 H30 L42 28 H2 Z" fill="#2e3038"/></svg>Trapèze<br><small>croupe</small>
+    </div>
+  </div>
   <div class="compteurs off" id="zoneCompteurs">
     <div class="compteur">
-      <label><span class="fleche">↔</span> Horizontal</label>
+      <label><span class="fleche">↔</span> <span id="lblH">Horizontal</span></label>
       <input type="number" id="nh" inputmode="decimal" placeholder="0" min="0">
       <div class="pm">
         <button class="moins" onclick="bump('nh',-1)">−</button>
         <button class="plus" onclick="bump('nh',1)">+</button>
+      </div>
+    </div>
+    <div class="compteur cache" id="compteurHaut">
+      <label><span class="fleche">↔</span> En haut (rang le plus court)</label>
+      <input type="number" id="nh2" inputmode="decimal" placeholder="0" min="0">
+      <div class="pm">
+        <button class="moins" onclick="bump('nh2',-1)">−</button>
+        <button class="plus" onclick="bump('nh2',1)">+</button>
       </div>
     </div>
     <div class="compteur">
@@ -296,7 +326,15 @@ const TUILES = [
   astuce:"<b>Ardoise naturelle 32×22 :</b> surface nuancée, reflets bleutés. Compte les visibles en ligne et les rangs visibles. Pureau = (32 − recouvrement) ÷ 2."}
 ];
 
-let sel=null, selFormat=null, pans=[], photoCible=null;
+let sel=null, selFormat=null, pans=[], photoCible=null, forme='rect';
+const FORMES={rect:{ico:'▭',nom:'rectangle',lbl:'Horizontal'},tri:{ico:'△',nom:'triangle',lbl:'En bas (rang le plus large)'},trap:{ico:'⏢',nom:'trapèze',lbl:'En bas (rang le plus large)'}};
+function setForme(f){
+  forme=f;
+  ['rect','tri','trap'].forEach(x=>document.getElementById('forme-'+x).classList.toggle('sel',x===f));
+  document.getElementById('compteurHaut').classList.toggle('cache',f!=='trap');
+  document.getElementById('lblH').textContent=FORMES[f].lbl;
+  calc();
+}
 const photosMem={};
 const $=id=>document.getElementById(id);
 
@@ -361,6 +399,7 @@ function choisir(id){
   $('lu').value=sel.lu; $('pu').value=sel.pu;
   const a=$('astuce'); a.innerHTML=sel.astuce; a.classList.add('visible');
   $('zoneCompteurs').classList.remove('off');
+  $('zoneFormes').classList.remove('off');
   majBadge();
   renderChips(); renderCartes(); calc();
   setTimeout(()=>$('zoneCompteurs').scrollIntoView({behavior:'smooth',block:'center'}),150);
@@ -418,9 +457,13 @@ function calc(){
   }
   const lu=(parseFloat($('lu').value)||sel.lu)/100;
   const pu=(parseFloat($('pu').value)||sel.pu)/100;
-  const m2=nh*lu*nv*pu;
+  const nh2=parseFloat($('nh2').value)||0;
+  /* largeur moyenne selon la forme : rectangle = nh, triangle = nh/2, trapèze = (bas+haut)/2 */
+  const nhMoy = forme==='rect' ? nh : forme==='tri' ? nh/2 : (nh+nh2)/2;
+  const m2=nhMoy*lu*nv*pu;
+  const nbPieces=Math.round(nhMoy*nv);
   $('resM2').innerHTML=fmt(m2)+' <small>m²</small>';
-  $('resDetail').textContent=`${fmt(nh*lu,2)} m × ${fmt(nv*pu,2)} m — ${Math.round(nh*nv)} pièces — ${sel.nom}`;
+  $('resDetail').textContent=`${FORMES[forme].ico} ${FORMES[forme].nom} — base ${fmt(nh*lu,2)} m × haut. ${fmt(nv*pu,2)} m — ≈ ${nbPieces} pièces — ${sel.nom}`;
   return m2;
 }
 
@@ -428,8 +471,8 @@ function calc(){
 function ajouterPan(){
   const m2=calc();
   if(!m2){alert('Choisis d\'abord une couverture et entre tes comptes !');return;}
-  pans.push({nom:sel.nom,nh:parseFloat($('nh').value),nv:parseFloat($('nv').value),m2});
-  $('nh').value='';$('nv').value='';
+  pans.push({nom:sel.nom,forme:FORMES[forme].ico,nh:parseFloat($('nh').value),nv:parseFloat($('nv').value),m2});
+  $('nh').value='';$('nv').value='';$('nh2').value='';
   calc();renderPans();
 }
 function supprPan(i){pans.splice(i,1);renderPans();}
@@ -437,14 +480,14 @@ function renderPans(){
   $('pansVide').style.display=pans.length?'none':'block';
   $('pansListe').innerHTML=pans.map((p,i)=>`
     <div class="pan">
-      <span>Pan ${i+1} — ${p.nom}<br><small>${p.nh} × ${p.nv}</small></span>
+      <span>Pan ${i+1} ${p.forme||''} — ${p.nom}<br><small>${p.nh} × ${p.nv}</small></span>
       <span><b>${fmt(p.m2)} m²</b> <button class="suppr" onclick="supprPan(${i})">×</button></span>
     </div>`).join('');
   $('pansTotal').style.display=pans.length?'flex':'none';
   $('totalVal').textContent=fmt(pans.reduce((s,p)=>s+p.m2,0))+' m²';
 }
 
-['nh','nv'].forEach(id=>$(id).addEventListener('input',calc));
+['nh','nh2','nv'].forEach(id=>$(id).addEventListener('input',calc));
 ['lu','pu'].forEach(id=>$(id).addEventListener('input',()=>{renderCartes();calc();}));
 renderCartes();
 </script>
