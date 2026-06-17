@@ -491,5 +491,95 @@ function renderPans(){
 ['lu','pu'].forEach(id=>$(id).addEventListener('input',()=>{renderCartes();calc();}));
 renderCartes();
 </script>
+
+<script>
+/* ===== MODE ALVÉOLES / BOSSES (ajout) ===== */
+(function(){
+  if(window.__alvInit){ return; }
+  window.__alvInit = true;
+  var Q = (typeof $!=='undefined') ? $ : function(id){return document.getElementById(id);};
+  var ALV = {
+    tempete44:[1,1], nord44:[1,1], panneTFP:[1,1], actua10:[1,1],
+    plate301:[1,1], romane12:[1,1], dblromane:[2,1],
+    fibro4024:[1,1], fibro6030:[1,1], ardnat3222:[1,1]
+  };
+  window.__ALV = ALV;
+  window.__mode = 'tuiles';
+  var plats = {plate301:1, fibro4024:1, fibro6030:1, ardnat3222:1, actua10:1};
+  function fac(){
+    var id = (typeof sel!=='undefined' && sel) ? sel.id : null;
+    var f = (id && ALV[id]) ? ALV[id] : [1,1];
+    return {h:f[0], v:f[1], id:id};
+  }
+  var zc = Q('zoneCompteurs');
+  var bar = document.createElement('div');
+  bar.id='modeBar';
+  bar.style.cssText='display:flex;gap:8px;margin:14px 0 10px';
+  bar.innerHTML='<button type="button" id="mTui"></button><button type="button" id="mAlv"></button>';
+  zc.parentNode.insertBefore(bar, zc);
+  var info=document.createElement('div');
+  info.id='alvInfo';
+  info.style.cssText='display:none;background:var(--creme-fonce);border-left:5px solid var(--terre);border-radius:0 12px 12px 0;padding:9px 12px;font-size:.82rem;margin:0 0 12px;line-height:1.4';
+  zc.parentNode.insertBefore(info, zc);
+  var labV = zc.querySelector('.compteur:last-of-type label');
+  if(labV) labV.innerHTML='<span class="fleche">↕</span> <span id="lblV">Vertical</span>';
+  var ch = Q('compteurHaut');
+  var labH2 = ch && ch.querySelector('label');
+  if(labH2) labH2.innerHTML='<span class="fleche">↔</span> <span id="lblH2">En haut (rang le plus court)</span>';
+  function styleBtns(){
+    var on='background:var(--terre);color:#fff;border-color:var(--terre)';
+    var off='background:#fff;color:var(--encre);border-color:var(--ardoise)';
+    var base='flex:1;border:3px solid;border-radius:14px;padding:12px 6px;font-weight:900;font-size:.82rem;cursor:pointer;box-shadow:3px 3px 0 rgba(46,48,56,.18);';
+    Q('mTui').innerHTML='▦ Je compte les tuiles'; Q('mAlv').innerHTML='⬭ Je compte les bosses';
+    Q('mTui').style.cssText=base+(window.__mode==='tuiles'?on:off);
+    Q('mAlv').style.cssText=base+(window.__mode==='alveoles'?on:off);
+  }
+  window.__alvSync = function(){
+    var f=fac();
+    var alv = window.__mode==='alveoles';
+    var baseH = (typeof FORMES!=='undefined' && typeof forme!=='undefined') ? FORMES[forme].lbl : 'Horizontal';
+    var lblH=Q('lblH'); if(lblH) lblH.textContent = alv ? ('⬭ '+baseH+' — bosses') : baseH;
+    var lblV=Q('lblV'); if(lblV) lblV.textContent = alv ? '⬭ Vertical — bosses' : 'Vertical';
+    var lblH2=Q('lblH2'); if(lblH2) lblH2.textContent = alv ? '⬭ En haut — bosses' : 'En haut (rang le plus court)';
+    if(alv && f.id){
+      if(plats[f.id] && f.h===1 && f.v===1){
+        info.innerHTML='<b>'+(sel?sel.nom:'')+'</b> est une tuile plate (pas de bosses). Compte-la comme avant : le résultat est le même.';
+      } else {
+        var parts=[f.h+' bosse'+(f.h>1?'s':'')+' = 1 tuile en largeur'];
+        if(f.v>1) parts.push(f.v+' bosses = 1 tuile en hauteur');
+        info.innerHTML='<b>'+(sel?sel.nom:'')+'</b> — '+parts.join(', ')+'. Compte les bosses, je convertis en m².';
+      }
+      info.style.display='block';
+    } else { info.style.display='none'; }
+    styleBtns();
+  };
+  function setMode(m){ window.__mode=m; window.__alvSync(); if(typeof calc==='function') calc(); }
+  Q('mTui').addEventListener('click', function(){setMode('tuiles');});
+  Q('mAlv').addEventListener('click', function(){setMode('alveoles');});
+  var origCalc = calc;
+  calc = function(){
+    var f=fac();
+    var nh=parseFloat(Q('nh').value)||0;
+    var nv=parseFloat(Q('nv').value)||0;
+    var nh2=parseFloat(Q('nh2').value)||0;
+    if(window.__mode==='alveoles'){ nh=nh/f.h; nh2=nh2/f.h; nv=nv/f.v; }
+    window.__alvSync();
+    if(typeof sel==='undefined' || !sel || !nh || !nv){
+      Q('resM2').innerHTML='0,0 <small>m²</small>';
+      Q('resDetail').textContent=(typeof sel!=='undefined'&&sel)?'Entre tes deux comptes':'Choisis une couverture et compte';
+      return 0;
+    }
+    var lu=(parseFloat(Q('lu').value)||sel.lu)/100;
+    var pu=(parseFloat(Q('pu').value)||sel.pu)/100;
+    var nhMoy = forme==='rect'? nh : forme==='tri'? nh/2 : (nh+nh2)/2;
+    var m2=nhMoy*lu*nv*pu;
+    var nbPieces=Math.round(nhMoy*nv);
+    Q('resM2').innerHTML=fmt(m2)+' <small>m²</small>';
+    Q('resDetail').textContent=FORMES[forme].ico+' '+FORMES[forme].nom+' — base '+fmt(nh*lu,2)+' m × haut. '+fmt(nv*pu,2)+' m — ≈ '+nbPieces+' pièces — '+sel.nom;
+    return m2;
+  };
+  styleBtns();
+})();
+</script>
 </body>
 </html>
